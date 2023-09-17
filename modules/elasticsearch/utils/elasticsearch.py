@@ -17,8 +17,9 @@ class Elasticsearch:
     
     def bulk(self, payload):
         target_endpoint = f'{self.url}/_bulk'
-        response = requests.post(target_endpoint, headers=self.headers, data=json.dumps(payload))
-        return response.text
+        print('payload', payload)
+        response = requests.post(target_endpoint, headers=self.headers, data=payload)
+        return json.loads(response.text)
     
 
     def create_index(self, index_name, payload = None):

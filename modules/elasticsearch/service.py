@@ -1,8 +1,9 @@
 from .schemas.elasticsearch import ElasticsearchBulkEndpointPayload, ElasticsearchCreateIndexPayload
 from .utils.helpers import get_elastic_client
 
-async def bulk_update(payload: ElasticsearchBulkEndpointPayload):
-    return payload
+def bulk_update(data):
+    elasticsearch_client = get_elastic_client(data)
+    return elasticsearch_client.bulk(data.payload)
 
 
 def create_index(data: ElasticsearchCreateIndexPayload):    

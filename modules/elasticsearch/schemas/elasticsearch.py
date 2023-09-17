@@ -11,9 +11,7 @@ class ElasticsearchBasePayload(BaseModel):
 
 
 class ElasticsearchBulkEndpointPayload(ElasticsearchBasePayload):
-    project: str
-    action: str
-    payload: List[dict]
+    payload: str
 
 
 class ElasticsearchCreateIndexPayload(ElasticsearchBasePayload):
