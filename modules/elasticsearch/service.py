@@ -1,15 +1,11 @@
 from .schemas.elasticsearch import ElasticsearchBulkEndpointPayload, ElasticsearchCreateIndexPayload
-from .utils.elasticsearch import Elasticsearch
-
+from .utils.helpers import get_elastic_client
 
 async def bulk_update(payload: ElasticsearchBulkEndpointPayload):
     return payload
 
 
-def create_index(data: ElasticsearchCreateIndexPayload):
-    host = data.host
-    token = data.token if data.token else None
-    
+def create_index(data: ElasticsearchCreateIndexPayload):    
     index_name = data.index_name
 
     payload = {
@@ -18,6 +14,6 @@ def create_index(data: ElasticsearchCreateIndexPayload):
         'aliases': data.aliases
     }
 
-    elasticsearch_client = Elasticsearch(host, token)
+    elasticsearch_client = get_elastic_client(data)
 
     return elasticsearch_client.create_index(index_name, payload)

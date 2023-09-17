@@ -12,12 +12,13 @@ router = APIRouter(
 
 
 @router.post("/bulk")
-async def bulk(payload: ElasticsearchBulkEndpointPayload):
-    return await bulk_update(payload)
+def bulk(payload: ElasticsearchBulkEndpointPayload):
+    return bulk_update(payload)
 
 
 @router.put("/create-index")
 def create(payload: ElasticsearchCreateIndexPayload):
     response = create_index(payload)
-    return JSONResponse(status_code=response.get('status'), content=response)
+    status = response.get('status')if response.get('status') else 201
+    return JSONResponse(status_code=status, content=response)
 
