@@ -23,6 +23,6 @@ def read_root():
     return {"Status": "Running"}
 
 
-app.include_router(es_router.router)
+app.include_router(es_router.router, prefix='/api')
 
 app.mount("/api", app)
