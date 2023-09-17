@@ -15,6 +15,11 @@ def create_index(data: ElasticsearchCreateIndexPayload):
         'aliases': data.aliases
     }
 
+    [ payload.pop(key) if not payload[key] else payload[key] for key in payload.copy().keys()]
+
+    if not len(payload.keys()):
+        payload = None
+
     elasticsearch_client = get_elastic_client(data)
 
     return elasticsearch_client.create_index(index_name, payload)
