@@ -1,7 +1,8 @@
 from fastapi import APIRouter, status
+from fastapi.responses import JSONResponse
 from config import get_settings
-from .schemas.elasticsearch import ElasticsearchBulkEndpointPayload
-from .service import bulk_update
+from .schemas.elasticsearch import ElasticsearchBulkEndpointPayload, ElasticsearchCreateIndexPayload
+from .service import bulk_update, create_index
 
 
 router = APIRouter(
@@ -15,7 +16,8 @@ async def bulk(payload: ElasticsearchBulkEndpointPayload):
     return await bulk_update(payload)
 
 
-@router.post("/create-index")
-async def create_index(payload: ElasticsearchBulkEndpointPayload):
-    return await create_index(payload)
+@router.put("/create-index")
+def create(payload: ElasticsearchCreateIndexPayload):
+    response = create_index(payload)
+    return JSONResponse(status_code=response.get('status'), content=response)
 
